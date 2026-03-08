@@ -55,3 +55,12 @@ class AsyncClient(ollama.AsyncClient):
         }
         existing = kwargs.pop("headers", {})
         super().__init__(host=host, headers={**cf_headers, **existing}, **kwargs)
+
+
+def chat(*args, **kwargs):
+    """Call Client().chat() so CF Access headers are injected automatically.
+
+    Behaves identically to ``ollama.chat`` but uses the subclassed Client that
+    sets Cloudflare Access headers on every request.
+    """
+    return Client().chat(*args, **kwargs)
